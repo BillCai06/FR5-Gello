@@ -19,22 +19,22 @@ ret = robot.MoveJ(joint_pos4, tool, user) #joint space motion
 
 print("Joint space motion point 4: error code", ret)
 ret = robot.SetGripperConfig(6,0) #Configure the gripper jaws
-time.sleep(5)
+time.sleep(1)
 print("Configuration jaw error code", ret)
 config = robot.GetGripperConfig() #Get the gripper configuration
-time.sleep(5)
+time.sleep(1)
 print("Getting the jaw configuration",config)
 time.sleep(1)
 error = robot.ActGripper(1,0) #Activate gripper
 time.sleep(1)
-time.sleep(5)
+
 error = robot.ActGripper(1,1)#Activate gripper
-time.sleep(5)
+time.sleep(1)
 print("Activating jaws error code",error)
 
 time.sleep(2)
 
-error = robot.MoveGripper(1,33,50,50,30000,0,0,0,0,0) #Control jaws
+error = robot.MoveGripper(1,100,50,50,30000,0,0,0,0,0) #Control jaws
 
 print("Control jaw error code",error)
 error = robot.GetAxleLuaGripperFunc(1)#Get Gripper Motion Done

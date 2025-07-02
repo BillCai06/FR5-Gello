@@ -831,7 +831,7 @@ class RPC():
     @log_call
     @xmlrpc_timeout
     def MoveJ(self, joint_pos, tool, user, desc_pos=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], vel=80.0, acc=0.0, ovl=100.0,
-              exaxis_pos=[0.0, 0.0, 0.0, 0.0], blendT=-1.0, offset_flag=0, offset_pos=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]):
+              exaxis_pos=[0.0, 0.0, 0.0, 0.0], blendT=10.0, offset_flag=0, offset_pos=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]):
         while self.reconnect_flag:
             time.sleep(0.1)
         if self.GetSafetyCode() != 0:

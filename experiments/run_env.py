@@ -32,7 +32,7 @@ class Args:
     base_camera_port: int = 5001
     hostname: str = "127.0.0.1"
     robot_type: str = None  # only needed for quest agent or spacemouse agent
-    hz: int = 100
+    hz: int = 200
     start_joints: Optional[Tuple[float, ...]] = None
 
     gello_port: Optional[str] = None
@@ -155,16 +155,19 @@ def main(args):
     
 
     print("Going to start position")
+    # is the gello agent
     start_pos = agent.act(env.get_obs())
-
+    start_pos = start_pos[:6]
+    print(f"Starting pos (rad): {start_pos}")
     # grab the newest observation
+    # this is the robot arm
     obs = env.get_obs()
     # joint_positions is assumed to be in radians
     joints = obs["joint_positions"]
 
     # convert to degrees
     joints_deg = np.degrees(joints)
-    start_deg = np.degrees(start_pos)
+    start_deg = np.degrees(start_pos[:6])   # assume first 6 joints are the gello arm
     # slice out GELLO vs FR5 (here GELLO is joints 0–5, FR5 is the rest)
     fr5_angles = joints_deg[:6]
     gello_angles = start_deg[:6]
@@ -203,6 +206,7 @@ def main(args):
     for _ in range(12):
         obs = env.get_obs()
         command_joints = agent.act(obs)
+        command_joints = command_joints[:6]  # assume first 6 joints are the gello arm
         current_joints = obs["joint_positions"]
         delta = command_joints - current_joints
 
@@ -218,6 +222,7 @@ def main(args):
     obs = env.get_obs()
     joints = obs["joint_positions"]
     action = agent.act(obs)
+    action = action[:6]  # assume first 6 joints are the gello arm
     delta = action - joints
 
     max_allowed = 1.7  # e.g. 0.6

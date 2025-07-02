@@ -140,11 +140,11 @@ class GelloAgent(Agent):
 
             config = PORT_CONFIG_MAP[port]
             self._robot = config.make_robot(port=port, start_joints=start_joints)
-
+    #Where to set the gripper pos pub 
     def act(self, obs: Dict[str, np.ndarray]) -> np.ndarray:
         full_joint_state = self._robot.get_joint_state()  # length 7
         arm_joint_state = full_joint_state[:-1]           # length 6 (removes gripper)
-        return arm_joint_state
+        return full_joint_state
 
 
     # def act(self, obs: Dict[str, np.ndarray]) -> np.ndarray:

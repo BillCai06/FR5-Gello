@@ -22,7 +22,7 @@ class RobotEnv:
     def __init__(
         self,
         robot: Robot,
-        control_rate_hz: float = 100.0,
+        control_rate_hz: float = 200.0,
         camera_dict: Optional[Dict[str, CameraDriver]] = None,
     ) -> None:
         self._robot = robot
@@ -35,7 +35,7 @@ class RobotEnv:
     def step(self, joints: np.ndarray) -> Dict[str, Any]:
         assert len(joints) == self._robot.num_dofs()
         self._robot.command_joint_state(joints)
-        
+        # self._robot.command_gripper_state(joints)
         self._rate.sleep()
         return self.get_obs()
 

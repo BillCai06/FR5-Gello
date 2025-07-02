@@ -111,6 +111,16 @@ class ZMQClientRobot(Robot):
         self._socket.send(send_message)
         result = pickle.loads(self._socket.recv())
         return result
+    
+    #  def command_gripper_state(self, gripper_state: np.ndarray) -> None:
+    #     """Command the leader robot to the given state of the gripper
+
+    #     Args:
+    #         gripper_state (T): The state to command the leader robot to.
+    #     """
+    #     self._gripper_state = gripper_state
+    #     if not self._dont_print:
+    #         print(self._gripper_state)
 
     def get_observations(self) -> Dict[str, np.ndarray]:
         """Get the current observations of the leader robot.

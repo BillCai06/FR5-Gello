@@ -36,7 +36,15 @@ class Robot(Protocol):
             joint_state (np.ndarray): The state to command the leader robot to.
         """
         raise NotImplementedError
+    
+    # @abstractmethod
+    # def command_gripper_state(self, gripper_state: np.ndarray) -> None:
+    #     """Command the leader robot to a given state.
 
+    #     Args:
+    #         joint_state (np.ndarray): The state to command the leader robot to.
+    #     """
+    #     raise NotImplementedError
     @abstractmethod
     def get_observations(self) -> Dict[str, np.ndarray]:
         """Get the current observations of the robot.
@@ -73,6 +81,10 @@ class PrintRobot(Robot):
         self._joint_state = joint_state
         if not self._dont_print:
             print(self._joint_state)
+    # def command_gripper_state(self, gripper_state: np.ndarray) -> None:
+    #     self._gripper_state = gripper_state
+    #     if not self._dont_print:
+    #         print(self._gripper_state)
 
     def get_observations(self) -> Dict[str, np.ndarray]:
         joint_state = self.get_joint_state()

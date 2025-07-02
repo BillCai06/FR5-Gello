@@ -30,9 +30,9 @@ class Robot:
     #     """Get current gripper position (0.0 = closed, 1.0 = open)"""
     #     raise NotImplementedError
     
-    # def command_gripper_state(self, gripper_state: float) -> None:
-    #     """Command gripper position (0.0 = closed, 1.0 = open)"""
-    #     raise NotImplementedError
+    def command_gripper_state(self, gripper_state: float) -> None:
+        """Command gripper position (0.0 = closed, 1.0 = open)"""
+        raise NotImplementedError
 
 
 @dataclass
@@ -70,7 +70,7 @@ class FR5Robot(Robot):
         self.last_command_time = time.time()
         
         # Gripper state
-        self.current_gripper_position = 1000000.0
+        self.current_gripper_position = 100.0
         self.target_gripper_position = 0.0
         
         # Safety and control
@@ -232,14 +232,14 @@ class FR5Robot(Robot):
              
                 joint_array = array.array('d', joint_list)
                 try:
-                    self.rpc_client.robot.Stop()
+                    self.rpc_client.Stop()
                 except Exception:
                     pass  # if Stop() isn’t available or fails, we ignore
 
                 tool = 0
                 user = 0
-                print(f"-----------------------------------------------------") 
-                print(f"Commanding joint state: {joint_array}") 
+                # print(f"-----------------------------------------------------") 
+                # print(f"Commanding joint state: {joint_array}") 
                
                 result = self.rpc_client.MoveJ(joint_array, tool, user)
                 if result != 0:
@@ -345,7 +345,7 @@ class FR5Robot(Robot):
         # Stop robot motion
         try:
             if self.rpc_client and hasattr(self.rpc_client.robot, 'Stop'):
-                self.rpc_client.robot.Stop()
+                self.rpc_client.GetRobotEmergencyStopState()
         except Exception as e:
             self.logger.error(f"Error during emergency stop: {e}")
     
